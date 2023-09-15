@@ -13,33 +13,29 @@ import { useModal } from "@/hooks/use-modal-store";
 import { FileUpload } from "../file-upload";
 
 const formSchema = z.object({
-    name: z.string().min(1, {
-        message: "Server name is required."
-    }),
-    imageUrl: z.string().min(1, {
-        message: "Server image is required."
+    serverId: z.string().length(24, {
+        message: "Server ID length should be of length 24"
     })
 });
 
-export const CreateServerModal = () => {
+export const InviteModel = () => {
     const { isOpen, onClose, type } = useModal();
     const router = useRouter();
 
-    const isModalOpen = isOpen && type === "createServer";
+    const isModalOpen = isOpen && type === "invite";
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            imageUrl: "",
+            serverId: ""
         }
     });
 
     const isLoading = form.formState.isSubmitting;
 
-    const onsubmit = async (values: z.infer<typeof formSchema>) => {
+    const onsubmit = async (value: z.infer<typeof formSchema>) => {
         try {
-            await axios.post("/api/servers", values);
+            const response = await axios.patch(`/api/join/${value.serverId}`);
 
             form.reset();
             router.refresh();
@@ -59,48 +55,30 @@ export const CreateServerModal = () => {
             <DialogContent className="bg-white rounded-lg p-6 w-96">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-semibold">
-                        Create a Server
+                        Join a Server
                     </DialogTitle>
 
                     <DialogDescription className="text-gray-600">
-                        Add a name and image to your server!
+                        Join a server using serverID
                     </DialogDescription>
                 </DialogHeader>
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onsubmit)}>
                         <div>
-                            <div className="my-4">
-                                <FormField
-                                    control={form.control}
-                                    name="imageUrl"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormControl>
-                                                <FileUpload
-                                                    endpoint="serverImage"
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-
                             <FormField
                                 control={form.control}
-                                name="name"
+                                name="serverId"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-sm font-semibold text-gray-700">
-                                            Server name
+                                            Server ID
                                         </FormLabel>
                                         <FormControl>
                                             <Input
                                                 disabled={isLoading}
                                                 className="bg-gray-100 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 py-2 px-3"
-                                                placeholder="Enter server name"
+                                                placeholder="Enter server ID"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -119,7 +97,7 @@ export const CreateServerModal = () => {
                                         : 'bg-blue-500 hover:bg-blue-600'
                                     } rounded-md transition duration-300`}
                             >
-                                Create
+                                Submit
                             </Button>
                         </DialogFooter>
                     </form>
