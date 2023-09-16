@@ -15,10 +15,11 @@ const ChannelOptions = ({ channels, server }: ChannelProps) => {
     return (
         <div>
             {channels.map((channel) => (
-                <div className="bg-blue-500 p-2 rounded-md shadow-md w-1/5 mx-4 my-4">
+                <div className="bg-blue-500 p-2 rounded-md shadow-md w-1/5 mx-4 my-4 flex flex-col items-start" key={channel.id}>
                     <p className="text-white font-bold">{channel.name}</p>
                     <p className="text-gray-400">{channel.type}</p>
                     <button onClick={() => onOpen("editChannel", { channel, server })}>Edit Channel</button>
+                    <button onClick={() => onOpen("deleteChannel", { channel, server })}>Delete Channel</button>
                 </div>
             ))}
         </div>

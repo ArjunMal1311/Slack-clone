@@ -6,7 +6,6 @@ export async function PATCH(req: Request, { params }: { params: { serverId: stri
     try {
         const profile = await currentProfile();
 
-        console.log(params.serverId)
         if (!profile) {
             return new NextResponse("Unauthorized", { status: 401 });
         }

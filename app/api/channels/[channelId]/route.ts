@@ -9,6 +9,8 @@ export async function DELETE(req: Request, { params }: { params: { channelId: st
         const profile = await currentProfile();
         const { searchParams } = new URL(req.url);
 
+        console.log(searchParams)
+
         const serverId = searchParams.get("serverId");
 
         if (!profile) {
@@ -49,7 +51,6 @@ export async function DELETE(req: Request, { params }: { params: { channelId: st
 
         return NextResponse.json(server);
     } catch (error) {
-        console.log("[CHANNEL_ID_DELETE]", error);
         return new NextResponse("Internal Error", { status: 500 });
     }
 }
@@ -61,8 +62,6 @@ export async function PATCH(req: Request, { params }: { params: { channelId: str
         const { searchParams } = new URL(req.url);
 
         const serverId = searchParams.get("serverId");
-
-        console.log(name, type, searchParams)
 
         if (!profile) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -112,7 +111,6 @@ export async function PATCH(req: Request, { params }: { params: { channelId: str
 
         return NextResponse.json(server);
     } catch (error) {
-        console.log("[CHANNEL_ID_PATCH]", error);
         return new NextResponse("Internal Error", { status: 500 });
     }
 }
