@@ -30,6 +30,7 @@ export default function ComboboxDemo({ server }: ServerProps) {
         {
             value: "Add Channel",
             label: "Add Channel",
+            onClick: () => onOpen("createChannel", { server })
         },
         {
             value: "Leave Server",

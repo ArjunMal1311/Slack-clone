@@ -1,3 +1,4 @@
+import ChannelOptions from "@/components/channel-options";
 import ServerOptions from "@/components/server-options";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -17,6 +18,7 @@ const serverIdPage = async ({ params }: ServerIDProps) => {
         return redirectToSignIn();
     }
 
+
     const server = await db.server.findUnique({
         where: {
             id: params.serverId,
@@ -28,14 +30,7 @@ const serverIdPage = async ({ params }: ServerIDProps) => {
             }
         },
         include: {
-            channels: {
-                where: {
-                    name: "general"
-                },
-                orderBy: {
-                    createdAt: "asc"
-                }
-            }
+            channels: {}
         }
     })
 
@@ -45,14 +40,14 @@ const serverIdPage = async ({ params }: ServerIDProps) => {
 
     return (
         <>
-            {server.channels.map((channel) => (
-                <div>
-                    {channel.name}
-                </div>
-            ))}
 
+            <div className="mx-4 my-4">
+                <ChannelOptions channels = {server.channels} />
+            </div>
 
-            <ServerOptions server={server} />
+            <div className="mx-4 my-4">
+                <ServerOptions server={server} />
+            </div>
         </>
     )
 }
