@@ -40,7 +40,7 @@ const page = async () => {
                 <div className='px-4 mx-4 my-4'>
                     <h3 className="text-2xl font-bold">Your Servers</h3>
                     {servers.map((server) => (
-                        <Link href={`/${server.id}`}>
+                        <Link href={`/chat/servers/${server.id}`}>
                             <div key={server.id} className="bg-gray-400 p-4 rounded-lg shadow-md my-4 w-1/4 flex space-x-6 justify-center hover:bg-gray-300">
                                 <h5>{server.id}</h5>
                                 <h4 className="text-lg font-semibold ">{server.name}</h4>
