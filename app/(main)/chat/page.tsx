@@ -56,9 +56,9 @@ const page = async () => {
                                 <h6 className="text-base font-semibold">Members:</h6>
                                 <div className="rounded-md p-2">
                                     {server.members.map((member) => (
-                                        <li key={member.id} className="inline-block mr-2 px-2 py-1 rounded-md bg-gray-300">
+                                        <Link href={`/chat/conversation/${member.id}`} key={member.id} className="inline-block mr-2 px-2 py-1 rounded-md bg-gray-300">
                                             {member.profile.name}
-                                        </li>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>

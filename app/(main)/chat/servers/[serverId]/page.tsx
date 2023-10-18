@@ -41,6 +41,7 @@ const serverIdPage = async ({ params }: ServerIDProps) => {
     return (
         <>
 
+
             <div className="mx-4 my-4">
                 <ChannelOptions channels = {server.channels} server = {server} />
             </div>
